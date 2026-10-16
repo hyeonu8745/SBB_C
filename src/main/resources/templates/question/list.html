@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+
+<div layout:fragment="content" class="container my-3">
+    <div class="col-lg-10">
+
+        <h2 class="mb-4 fw-bold">질문 리스트</h2>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered align-middle mb-0">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col" class="text-center" style="width: 70%;">
+                                제목 (Subject)
+                            </th>
+                            <th scope="col" class="text-center" style="width: 30%;">
+                                작성일 (Created)
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="question : ${list}">
+
+                            <td>
+                                <a th:href="@{|/question/${question.id}|}"
+                                   th:text="${question.subject}">
+                                    제목
+                                </a>
+                            </td>
+
+                            <td th:text="${#temporals.format(question.created, 'yyyy-MM-dd')}" class="text-center">
+                                작성일
+                            </td>
+                        </tr>
+
+                        <!-- 질문이 없는 경우 -->
+                        <tr th:if="${#lists.isEmpty(list)}">
+                            <td colspan="2" class="text-center text-muted py-4">
+                                등록된 질문이 없습니다.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</html>
+
