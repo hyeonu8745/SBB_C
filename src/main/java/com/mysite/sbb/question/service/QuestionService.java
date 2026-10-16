@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,5 +25,15 @@ public class QuestionService {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 데이터 없음!"));
         return question;
+    }
+
+    public void createQuestion(String subject, String content) {
+        Question question = Question.builder()
+                .subject(subject)
+                .content(content)
+                .created(LocalDateTime.now())
+                .build();
+
+        questionRepository.save(question);
     }
 }

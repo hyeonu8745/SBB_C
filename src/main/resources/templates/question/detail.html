@@ -5,19 +5,75 @@
 
 
 <div layout:fragment="content" class="container my-3">
-    <h2 th:text="${question.subject}">제목</h2>
-    <h3 th:text="${question.content}">내용</h3>
+    <!-- 질문 제목 -->
+    <h2 class="border-bottom pb-3 mb-4"
+        th:text="${question.subject}">제목</h2>
 
-    <h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
-    <div>
-        <ul>
-            <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
-        </ul>
+    <!-- 질문 내용 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">질문 내용</h5>
+            <p class="card-text" th:text="${question.content}">내용</p>
+        </div>
     </div>
 
-    <form th:action="@{|/answer/create/${question.id}|}" method="post">
-        <textarea rows="15" id="content" name="content"></textarea>
-        <input type="submit" value="답변 등록">
-    </form>
+    <!-- 답변 목록 -->
+    <h5 class="mb-3"
+        th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|">
+    </h5>
+
+    <div class="mb-4">
+
+        <!-- 답변이 없는 경우 -->
+        <div th:if="${#lists.isEmpty(question.answerList)}"
+             class="alert alert-light text-muted">
+            아직 등록된 답변이 없습니다.
+        </div>
+
+        <!-- 답변마다 개별 카드 생성 -->
+        <div th:each="answer : ${question.answerList}"
+             class="card mb-3">
+
+            <div class="card-body">
+                <p class="card-text mb-0"
+                   th:text="${answer.content}">
+                    답변 내용
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 답변 등록 폼 -->
+    <div class="card">
+        <div class="card-header bg-light">
+            <strong>답변 등록</strong>
+        </div>
+
+        <div class="card-body">
+            <form th:action="@{|/answer/create/${question.id}|}"
+                  method="post">
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">
+                        답변 내용
+                    </label>
+                    <textarea class="form-control"
+                              rows="5"
+                              id="content"
+                              name="content"
+                              placeholder="답변을 입력하세요."></textarea>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        답변 등록
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </html>
