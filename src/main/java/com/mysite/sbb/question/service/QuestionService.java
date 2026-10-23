@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.service;
 
+import com.mysite.sbb.question.dto.QuestionDTO;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,10 +28,10 @@ public class QuestionService {
         return question;
     }
 
-    public void createQuestion(String subject, String content) {
+    public void createQuestion(QuestionDTO questionDTO) {
         Question question = Question.builder()
-                .subject(subject)
-                .content(content)
+                .subject(questionDTO.getSubject())
+                .content(questionDTO.getContent())
                 .created(LocalDateTime.now())
                 .build();
 
