@@ -24,7 +24,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="question : ${list}">
+                        <tr th:each="question : ${paging}">
 
                             <td>
                                 <a th:href="@{|/question/${question.id}|}"
@@ -33,7 +33,7 @@
                                 </a>
                             </td>
 
-                            <td th:text="${#temporals.format(question.created, 'yyyy-MM-dd')}" class="text-center">
+                            <td th:text="${#temporals.format(question.created, 'yyyy-MM-dd HH:mm')}" class="text-center">
                                 작성일
                             </td>
                         </tr>
